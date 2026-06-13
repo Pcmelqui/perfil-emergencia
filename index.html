@@ -549,7 +549,7 @@
       link.addEventListener('click', (e) => {
         e.preventDefault();
         let num = link.getAttribute('data-number').replace(/\D/g, '');
-        if (!num.startsWith('56')) num = '56' + num;
+        if (!num.startsWith('51')) num = '51' + num;
         const msg = encodeURIComponent(`🚨 EMERGENCIA - Necesito ayuda. Soy ${userData.nombre}. Mi dirección: ${userData.direccion}`);
         window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
       });
@@ -559,12 +559,12 @@
       link.addEventListener('click', (e) => {
         e.preventDefault();
         let num = link.getAttribute('data-number').replace(/\D/g, '');
-        if (!num.startsWith('56')) num = '56' + num;
+        if (!num.startsWith('51')) num = '51' + num;
         window.location.href = `tel:${num}`;
       });
     });
     
-    const services = { policia: '133', ambulancia: '131', bomberos: '132', guardia: '137' };
+    const services = { policia: '105', ambulancia: '106', bomberos: '116', guardia: '137' };
     document.querySelectorAll('.help-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const service = btn.getAttribute('data-service');
