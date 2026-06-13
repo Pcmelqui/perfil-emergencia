@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Mi Perfil de Emergencia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      padding: 20px 16px 40px;
+      color: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .emergency-container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      padding: 20px;
+    }
+    @media (min-width: 1024px) {
+      body { padding: 40px; }
+      .emergency-container { max-width: 550px; }
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    
+    /* --- ESTILOS PARA LA FOTO DE PERFIL --- */
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 35px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 8px 14px -6px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Si quieres seguir usando iniciales como respaldo, descomenta esto:
+    .avatar.no-image {
+      font-size: 28px;
+      font-weight: 600;
+      color: white;
+    }
+    */
+    
+    .profile-name h2 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #0f172a;
+    }
+    .profile-name p {
+      color: #475569;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: #eef2ff;
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 30px;
+      margin-top: 6px;
+    }
+    .emergency-badge {
+      background: #dc2626;
+      color: white;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      margin-bottom: 20px;
+    }
+    
+    /* Reproductor de voz */
+    .voice-message {
+      background: #f1f5f9;
+      border-radius: 80px;
+      padding: 8px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .voice-icon { color: #2563eb; font-size: 1.2rem; }
+    .voice-label { font-weight: 500; font-size: 0.8rem; color: #1e293b; }
+    .voice-progress-bar {
+      flex: 1;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .voice-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #2563eb;
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+    .voice-time { font-size: 0.7rem; color: #475569; font-family: monospace; min-width: 70px; }
+    .voice-play-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    
+    .medical-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: #f8fafc;
+      border-radius: 28px;
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .med-card {
+      background: white;
+      border-radius: 20px;
+      padding: 12px;
+    }
+    .med-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-bottom: 4px;
+    }
+    .med-value {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+    .full-width { grid-column: span 2; }
+    .section-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin: 20px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .contact-row {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 4px; }
+    .contact-name { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    .contact-parentesco {
+      font-size: 0.7rem;
+      color: #3b82f6;
+      background: #eef2ff;
+      padding: 2px 8px;
+      border-radius: 20px;
+      display: inline-block;
+      width: fit-content;
+    }
+    .contact-actions { display: flex; gap: 10px; }
+    .contact-actions a {
+      background: #f1f5f9;
+      padding: 8px 14px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #1e293b;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-outline {
+      background: white;
+      border: 1.5px solid #cbd5e1;
+      color: #1e293b;
+      padding: 12px 20px;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+    }
+    .help-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 16px 0 12px;
+    }
+    .help-btn {
+      background: #f1f5f9;
+      border-radius: 60px;
+      padding: 10px 16px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      border: none;
+    }
+    .help-btn.police { color: #1e40af; background: #eef2ff; }
+    .help-btn.ambulance { color: #b91c1c; background: #fef2f2; }
+    .help-btn.fire { color: #c2410c; background: #fff7ed; }
+    .help-btn.coast { color: #0f766e; background: #f0fdfa; }
+    .address-row {
+      background: #fef9e3;
+      border-left: 4px solid #facc15;
+      padding: 12px 16px;
+      border-radius: 20px;
+      margin: 16px 0;
+      font-size: 0.85rem;
+    }
+    .footer-note {
+      font-size: 0.7rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .toast-msg {
+      visibility: hidden;
+      min-width: 240px;
+      background-color: #0f172a;
+      color: #fff;
+      text-align: center;
+      border-radius: 40px;
+      padding: 10px 20px;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .toast-msg.show { visibility: visible; opacity: 1; }
+    @media (max-width: 480px) {
+      .emergency-container { padding: 16px; }
+      .contact-row { flex-direction: column; align-items: stretch; }
+      .contact-actions { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="emergency-container" id="app"></div>
+<div id="toastMsg" class="toast-msg"></div>
+
+<script>
+  // ============================================
+  // 🟢 CONFIGURACIÓN DE IMAGEN DE PERFIL
+  // ============================================
+  // CAMBIA ESTA URL por la ruta de tu foto
+  // Opciones:
+  // 1. Foto desde internet: "https://ejemplo.com/mi-foto.jpg"
+  // 2. Foto local en GitHub: "imagenes/perfil.jpg"
+  // 3. Dejar vacío para mostrar iniciales: ""
+  const FOTO_PERFIL_URL = "imagenes/perfil.jpgui";
+  // Prueba con esta URL de ejemplo (muestra una foto de persona)
+  // Para usar iniciales en lugar de foto, pon: FOTO_PERFIL_URL = "";
+  
+  // ============================================
+  // CONFIGURACIÓN DE AUDIO (MENSAJE DE VOZ)
+  // ============================================
+  const AUDIO_URL = "audios/voz-emergencia.mp3";
+  
+  // ============================================
+  // DATOS DEL USUARIO
+  // ============================================
+  const userData = {
+    nombre: "Emilio González",
+    rut: "99.999.999-9",
+    grupoSanguineo: "A-",
+    condiciones: "TDAH / Trastorno Espectro Autista (T.E.A.)",
+    alergias: "Penicilina",
+    medicamentos: "Ritalin",
+    descripcionImportante: "Es muy tranquilo y puede que sea vergonzoso. En situación de estrés, mantener calma y hablar despacio.",
+    direccion: "Av. Los Pioneros 2450, Depto 12, Providencia, Santiago, Chile",
+    
+    contactos: [
+      { nombre: "Ana González", parentesco: "👩‍👧 Mamá", telefono: "56912345678" },
+      { nombre: "Carlos González", parentesco: "👨‍👦 Papá", telefono: "56987654321" },
+      { nombre: "Laura Martínez", parentesco: "👧 Hermana", telefono: "56911223344" },
+      { nombre: "Sofía Ramírez", parentesco: "👩‍🦱 Tía", telefono: "56999887766" }
+    ]
+  };
+
+  // Obtener iniciales del nombre
+  function getInitials() {
+    return userData.nombre.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+  }
+
+  function renderEmergencyPage() {
+    const container = document.getElementById('app');
+    
+    let contactsHTML = '';
+    userData.contactos.forEach(contact => {
+      contactsHTML += `
+        <div class="contact-row">
+          <div class="contact-info">
+            <div class="contact-name"><i class="fas fa-user-circle"></i> ${contact.nombre}</div>
+            <div class="contact-parentesco"><i class="fas fa-heart" style="font-size: 0.6rem;"></i> ${contact.parentesco}</div>
+          </div>
+          <div class="contact-actions">
+            <a href="#" class="whatsapp-link" data-number="${contact.telefono}" data-nombre="${contact.nombre}"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+            <a href="#" class="call-link" data-number="${contact.telefono}" data-nombre="${contact.nombre}"><i class="fas fa-phone-alt"></i><span>Llamar</span></a>
+          </div>
+        </div>
+      `;
+    });
+
+    // Generar HTML del avatar con foto o iniciales
+    let avatarHTML = '';
+    if (FOTO_PERFIL_URL && FOTO_PERFIL_URL !== '') {
+      avatarHTML = `<div class="avatar"><img src="${FOTO_PERFIL_URL}" alt="Foto de ${userData.nombre}"></div>`;
+    } else {
+      avatarHTML = `<div class="avatar" style="font-size: 28px; font-weight: 600; color: white;">${getInitials()}</div>`;
+    }
+
+    const html = `
+      <div class="profile-header">
+        ${avatarHTML}
+        <div class="profile-name">
+          <h2>${userData.nombre}</h2>
+          <p><i class="fas fa-id-card"></i> PERFIL DE EMERGENCIA</p>
+        </div>
+      </div>
+
+      <div class="emergency-badge">
+        <i class="fas fa-triangle-exclamation"></i> Usa estos datos solo en caso de emergencia
+      </div>
+
+      <!-- REPRODUCTOR DE VOZ -->
+      <div class="voice-message" id="voiceMessageContainer">
+        <i class="fas fa-microphone-alt voice-icon"></i>
+        <span class="voice-label">MENSAJE DE VOZ</span>
+        <div class="voice-progress-bar">
+          <div class="voice-progress-fill" id="voiceProgressFill"></div>
+        </div>
+        <span class="voice-time" id="voiceTime">0:00 / 0:00</span>
+        <button class="voice-play-btn" id="voicePlayBtn">
+          <i class="fas fa-play" id="voicePlayIcon"></i>
+        </button>
+      </div>
+
+      <div class="medical-grid">
+        <div class="med-card"><div class="med-label"><i class="far fa-id-card"></i> RUT / DNI</div><div class="med-value">${userData.rut}</div></div>
+        <div class="med-card"><div class="med-label"><i class="fas fa-tint"></i> GRUPO SANGUÍNEO</div><div class="med-value">${userData.grupoSanguineo}</div></div>
+        <div class="med-card"><div class="med-label"><i class="fas fa-brain"></i> CONDICIÓN MÉDICA</div><div class="med-value">${userData.condiciones}</div></div>
+        <div class="med-card"><div class="med-label"><i class="fas fa-allergies"></i> ALERGIAS</div><div class="med-value">${userData.alergias}</div></div>
+        <div class="med-card"><div class="med-label"><i class="fas fa-capsules"></i> MEDICAMENTOS</div><div class="med-value">${userData.medicamentos}</div></div>
+        <div class="med-card full-width"><div class="med-label"><i class="fas fa-heartbeat"></i> IMPORTANTE</div><div class="med-value">${userData.descripcionImportante}</div></div>
+      </div>
+
+      <div class="section-title"><i class="fas fa-phone-alt" style="color:#dc2626;"></i> CONTACTOS DE EMERGENCIA <span style="font-size:0.7rem; background:#fee2e2; padding:2px 8px; border-radius:20px;">${userData.contactos.length}</span></div>
+      <div class="contact-list">${contactsHTML}</div>
+
+      <div style="background:#eef2ff; border-radius:24px; padding:12px 18px; margin:10px 0;">
+        <div style="display:flex; gap:10px;"><i class="fas fa-map-marker-alt" style="color:#3b82f6;"></i><div style="font-size:0.8rem;">¿No compartiste tu ubicación?<br><span style="color:#334155;">Enviar ubicación exacta ayuda a la familia.</span></div></div>
+        <button id="sendLocationBtn" class="btn-primary" style="margin-top:12px;"><i class="fas fa-location-dot"></i> Enviar mi ubicación actual</button>
+      </div>
+
+      <button id="nearestStationBtn" class="btn-outline"><i class="fas fa-building-shield"></i> IR A COMISARÍA MÁS CERCANA</button>
+
+      <div class="address-row"><i class="fas fa-home"></i> Dirección de residencia habitual<br><strong>${userData.direccion}</strong></div>
+
+      <div class="section-title"><i class="fas fa-hands-helping"></i> SERVICIOS DE AYUDA</div>
+      <div class="help-grid">
+        <button class="help-btn police" data-service="policia"><i class="fas fa-shield-haltered"></i> Policía • 133</button>
+        <button class="help-btn ambulance" data-service="ambulancia"><i class="fas fa-truck-medical"></i> Ambulancia • 131</button>
+        <button class="help-btn fire" data-service="bomberos"><i class="fas fa-fire-extinguisher"></i> Bomberos • 132</button>
+        <button class="help-btn coast" data-service="guardia"><i class="fas fa-ship"></i> Guardia Costera • 137</button>
+      </div>
+
+      <div class="footer-note"><i class="fab fa-whatsapp"></i> WhatsApp · <i class="fas fa-phone-alt"></i> Llamar · Emergencias: mantén la calma.</div>
+    `;
+    
+    container.innerHTML = html;
+  }
+
+  renderEmergencyPage();
+
+  // Reproductor de audio
+  let audio = null;
+  let isPlaying = false;
+
+  function initAudioPlayer() {
+    const playBtn = document.getElementById('voicePlayBtn');
+    const playIcon = document.getElementById('voicePlayIcon');
+    const progressFill = document.getElementById('voiceProgressFill');
+    const timeDisplay = document.getElementById('voiceTime');
+    if (!playBtn) return;
+    
+    audio = new Audio(AUDIO_URL);
+    audio.addEventListener('loadedmetadata', () => {
+      const duration = audio.duration;
+      if (!isNaN(duration)) timeDisplay.textContent = `0:00 / ${formatTime(duration)}`;
+    });
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+        timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+      }
+    });
+    audio.addEventListener('ended', () => {
+      isPlaying = false;
+      playIcon.className = 'fas fa-play';
+      progressFill.style.width = '0%';
+      audio.currentTime = 0;
+    });
+    
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!audio) return;
+      if (isPlaying) {
+        audio.pause();
+        playIcon.className = 'fas fa-play';
+        isPlaying = false;
+      } else {
+        audio.play().catch(() => showToast('⚠️ Error al reproducir audio', true));
+        playIcon.className = 'fas fa-pause';
+        isPlaying = true;
+      }
+    });
+  }
+  
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+  
+  function showToast(msg, isError = false) {
+    const toast = document.getElementById('toastMsg');
+    toast.textContent = msg;
+    toast.style.background = isError ? '#dc2626' : '#0f172a';
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.style.background = '#0f172a';
+    }, 2800);
+  }
+
+  setTimeout(() => {
+    initAudioPlayer();
+    
+    const sendBtn = document.getElementById('sendLocationBtn');
+    if (sendBtn) {
+      sendBtn.addEventListener('click', () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const mapsUrl = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+              showToast('📍 Ubicación obtenida');
+              if (navigator.share) navigator.share({ title: 'Mi ubicación', url: mapsUrl });
+              else window.open(mapsUrl, '_blank');
+            },
+            () => showToast('⚠️ Permiso denegado', true)
+          );
+        } else showToast('⚠️ Geolocalización no soportada', true);
+      });
+    }
+    
+    const stationBtn = document.getElementById('nearestStationBtn');
+    if (stationBtn) {
+      stationBtn.addEventListener('click', () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => window.open(`https://www.google.com/maps/search/comisaria/@${pos.coords.latitude},${pos.coords.longitude},14z`, '_blank'),
+            () => window.open('https://www.google.com/maps/search/comisaria+cercana', '_blank')
+          );
+        } else window.open('https://www.google.com/maps/search/comisaria+cercana', '_blank');
+      });
+    }
+    
+    document.querySelectorAll('.whatsapp-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        let num = link.getAttribute('data-number').replace(/\D/g, '');
+        if (!num.startsWith('56')) num = '56' + num;
+        const msg = encodeURIComponent(`🚨 EMERGENCIA - Necesito ayuda. Soy ${userData.nombre}. Mi dirección: ${userData.direccion}`);
+        window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
+      });
+    });
+    
+    document.querySelectorAll('.call-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        let num = link.getAttribute('data-number').replace(/\D/g, '');
+        if (!num.startsWith('56')) num = '56' + num;
+        window.location.href = `tel:${num}`;
+      });
+    });
+    
+    const services = { policia: '133', ambulancia: '131', bomberos: '132', guardia: '137' };
+    document.querySelectorAll('.help-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const service = btn.getAttribute('data-service');
+        if (services[service] && confirm(`¿Llamar a ${btn.textContent.trim()}?`)) {
+          window.location.href = `tel:${services[service]}`;
+        }
+      });
+    });
+  }, 100);
+</script>
+</body>
+</html>
