@@ -550,7 +550,7 @@
         e.preventDefault();
         let num = link.getAttribute('data-number').replace(/\D/g, '');
         if (!num.startsWith('51')) num = '51' + num;
-        const msg = encodeURIComponent(`🚨 EMERGENCIA - Necesito ayuda. Soy ${userData.nombre}. Mi dirección: ${userData.direccion}`);
+        const msg = encodeURIComponent(`🚨 EMERGENCIA - Necesito ayuda. Soy ${userData.nombre}. Por favor llámame ahora. No puedo compartir mi ubicación en este momento.`);
         window.open(`https://wa.me/${num}?text=${msg}`, '_blank');
       });
     });
