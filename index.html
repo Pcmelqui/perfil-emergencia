@@ -201,19 +201,40 @@
       border-radius: 20px;
       display: inline-block;
       width: fit-content;
-    }
-    .contact-actions { display: flex; gap: 10px; }
-    .contact-actions a {
-      background: #f1f5f9;
-      padding: 8px 14px;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: #1e293b;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+.contact-actions { display: flex; gap: 10px; }
+
+/* ESTILO BASE para ambos botones */
+.contact-actions a {
+  padding: 8px 14px;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+/* BOTÓN WHATSAPP - VERDE */
+.contact-actions a.whatsapp-link {
+  background: #25D366;
+  color: white;
+}
+
+.contact-actions a.whatsapp-link:hover {
+  background: #128C7E;
+}
+
+/* BOTÓN LLAMAR - AZUL */
+.contact-actions a.call-link {
+  background: #3b82f6;
+  color: white;
+}
+
+.contact-actions a.call-link:hover {
+  background: #2563eb;
+}
     }
     .btn-primary {
       background: #2563eb;
