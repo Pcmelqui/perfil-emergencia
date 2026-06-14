@@ -211,19 +211,24 @@
       width: fit-content;
     }
     
-    .contact-actions { display: flex; gap: 8px; }
+    .contact-actions { display: flex; gap: 10px; }
     
-    /* BOTONES DE CONTACTO */
+    /* BOTONES DE CONTACTO - VERSIÓN GRANDE */
     .contact-actions a {
-      padding: 6px 12px;
+      padding: 10px 18px;
       border-radius: 40px;
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
       transition: all 0.2s ease;
+    }
+    
+    /* Iconos más grandes */
+    .contact-actions a i {
+      font-size: 1.2rem;
     }
     
     .contact-actions a.whatsapp-link {
@@ -231,9 +236,17 @@
       color: white;
     }
     
+    .contact-actions a.whatsapp-link:hover {
+      background: #128C7E;
+    }
+    
     .contact-actions a.call-link {
       background: #3b82f6;
       color: white;
+    }
+    
+    .contact-actions a.call-link:hover {
+      background: #2563eb;
     }
     
     /* BOTONES PRINCIPALES */
@@ -370,8 +383,8 @@
   // ============================================
   // CONFIGURACIÓN
   // ============================================
-  const FOTO_PERFIL_URL = "imagenes/perfil.jpg";  // Vacío = iniciales
-  const AUDIO_URL = "Audios/audio.mp3";  // Sin audio por ahora
+  const FOTO_PERFIL_URL = "images/perfil.jpg";  // Vacío = iniciales
+  const AUDIO_URL = "audios/voz-emergencia.mp3";  // Sin audio por ahora
   
   const userData = {
     nombre: "Adriana Vilcatoma",
@@ -617,7 +630,7 @@
       btn.addEventListener('click', () => {
         const service = btn.getAttribute('data-service');
         if (services[service]) {
-          if (confirm(`¿Llamar a ${btn.querySelector('span')?.textContent || service} al ${services[service]}?`)) {
+          if (confirm(`¿Llamar a ${btn.textContent.trim()}?`)) {
             window.location.href = `tel:${services[service]}`;
           }
         }
